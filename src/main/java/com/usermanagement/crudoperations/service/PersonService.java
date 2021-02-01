@@ -43,26 +43,38 @@ public class PersonService {
     public boolean updatePerson(Integer userId, Person person) {
 
         Optional<Person> temp=personRepository.findById(userId);
-        if(temp==null)
-            return false;
-        else {
-            person.setId(userId);
-            personRepository.save(person);
-            return true;
+        if(temp.isPresent())
+        {
+            if((personRepository.findByEmailId(person.getEmailId())==null)
+                    &&
+                    personRepository.findByPhoneNumber(person.getPhoneNumber())==null
+                    &&
+                    personRepository.findByUserName(person.getUserName())==null)
+            {
+                person.setId(userId);
+                personRepository.save(person);
+                return true;
+            }
+
         }
+
+         return false;
+
     }
 
     //deleting a user info
     @Transactional
     public boolean deletePerson(Integer userId) {
         Optional<Person> temp=personRepository.findById(userId);
-        if(temp==null)
+
+        if(temp.isPresent())
+            {
+                Person callPerson=(Person)temp.get();
+                personRepository.delete(callPerson);
+                return true;
+            }
+        else
             return false;
-        else {
-            Person callPerson=temp.get();
-            personRepository.delete(callPerson);
-            return true;
-        }
     }
 
     //get all users from DB
@@ -75,13 +87,15 @@ public class PersonService {
     @Transactional
     public PersonResponse getPerson(Integer userId) {
         Optional<Person> temp=personRepository.findById(userId);
-        if(temp==null)
-            return null;
+        if(temp.isPresent())
+            {
+                Person callPerson=temp.get();
+                PersonResponse personResponse=new PersonResponse();
+                personResponse.map(callPerson);
+                return personResponse;
+            }
         else {
-            Person callPerson=temp.get();
-            PersonResponse personResponse=new PersonResponse();
-            personResponse.map(callPerson);
-            return personResponse;
+            return null;
         }
     }
 

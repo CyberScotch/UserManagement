@@ -1,6 +1,9 @@
 package com.usermanagement.crudoperations.model;
 
 import javax.persistence.*;
+import javax.validation.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="person")
@@ -18,12 +21,15 @@ public class Person {
     private String lastName;
 
     //validate phone number
-    /*@Pattern("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$")*/
     @Column(name="mobile_number", unique=true)
+   // @Pattern(regexp="^(?:(?:\\\\+|0{0,2})91(\\\\s*[\\\\-]\\\\s*)?|[0]?)?[789]\\\\d{9}$" ,message = "Phone number must be valid")
     private String phoneNumber;
+
     //validate email ID
+    //@Email(message = "Email should be valid")
     @Column(name="email_id" , unique=true)
     private String emailId;
+
     @Column(name="address_1")
     private String address1;
     @Column(name="address_2")
