@@ -22,7 +22,7 @@ public class Person {
 
     //validate phone number
     @Column(name="mobile_number", unique=true)
-   // @Pattern(regexp="^(?:(?:\\\\+|0{0,2})91(\\\\s*[\\\\-]\\\\s*)?|[0]?)?[789]\\\\d{9}$" ,message = "Phone number must be valid")
+    //@Pattern(regexp="^(?:(?:\\\\+|0{0,2})91(\\\\s*[\\\\-]\\\\s*)?|[0]?)?[789]\\\\d{9}$" ,message = "Phone number must be valid")
     private String phoneNumber;
 
     //validate email ID

@@ -25,27 +25,28 @@ public class PersonController {
     PersonService personService;
 
     //To add a user without duplicate username, email_id or Phone_no
-    @RequestMapping(value = "/persons", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String insertPerson(@RequestBody Person person) {
         return personService.addPerson(person) ? "User created" : "User Already Exists";
     }
 
+    //getting specific fields of user
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public PersonResponse getPerson(@RequestParam(value="userId") Integer userId) {
+        return personService.getPerson(userId);
+    }
     //updating using ID of user
-    @RequestMapping(value = "/persons", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
     public String updatePerson(@RequestParam(value="userId") Integer userId, @RequestBody Person person) {
         return personService.updatePerson(userId, person) ? "User Updated" : "User ID invalid OR Duplicate data";
     }
 
     //deleting using ID of user
-    @RequestMapping(value = "/persons", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user", method = RequestMethod.DELETE)
     public String deletePerson(@RequestParam Integer userId) {
-        return personService.deletePerson(userId) ? " User Deleted " : " User ID invalid";
+        return personService.deletePerson(userId) ? " User Deleted " : " User should exist";
     }
 
-    //getting specific fields of user
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public PersonResponse getPerson(@RequestParam(value="userId") Integer userId) {
-        return personService.getPerson(userId);
-    }
+
 
 }
